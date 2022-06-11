@@ -60,7 +60,7 @@
     <form action="{{ url_for(endpoint, **kwargs) }}" method="{{ method }}"
           id="{{ fid }}" class="{{ css_class }}" role="form">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        {{ form.hidden_tag }}
+        {{ form.hidden_tag() }}
         {{ caller () }}
     </form>
 {%- endmacro -%}
