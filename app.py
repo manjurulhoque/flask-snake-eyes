@@ -4,6 +4,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 from blueprints.page import page
 from blueprints.contact import contact
+from blueprints.admin import admin
 from blueprints.user import user
 from blueprints.user.models import User
 from extensions import debug_toolbar, mail, csrf, login_manager, db
@@ -58,6 +59,7 @@ def create_app(settings_override=None):
     app.register_blueprint(page)
     app.register_blueprint(contact)
     app.register_blueprint(user)
+    app.register_blueprint(admin)
     extensions(app)
     authentication(app, User)
 
