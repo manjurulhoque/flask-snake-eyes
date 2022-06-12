@@ -3,6 +3,7 @@ from collections import OrderedDict
 from hashlib import md5
 
 import pytz
+import jwt
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -107,8 +108,8 @@ class User(UserMixin, ResourceMixin, db.Model):
         reset_token = u.serialize_token()
 
         # This prevents circular imports.
-        from blueprints.user.tasks import (deliver_password_reset_email)
-        deliver_password_reset_email.delay(u.id, reset_token)
+        # from blueprints.user.tasks import (deliver_password_reset_email)
+        # deliver_password_reset_email.delay(u.id, reset_token)
 
         return u
 
@@ -166,8 +167,17 @@ class User(UserMixin, ResourceMixin, db.Model):
         private_key = current_app.config['SECRET_KEY']
 
         # serializer = TimedJSONWebSignatureSerializer(private_key, expiration)
-        serializer = TimedSerializer(private_key)
-        return serializer.dumps({'user_email': self.email}).decode('utf-8')
+        # serializer = TimedSerializer(private_key)
+        # return serializer.dumps({'user_email': self.email}).decode('utf-8')
+        # print(serializer.dump_payload({'user_email': self.email}))
+        # return serializer.dumps({'user_email': self.email})
+        token = jwt.encode(
+            payload={'user_email': self.email},
+            key=private_key
+        )
+        # need to replace jws with jwt
+        print(token)
+        return token
 
     def update_activity_tracking(self, ip_address):
         """

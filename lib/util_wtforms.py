@@ -1,7 +1,7 @@
-from flask_wtf import Form
+from flask_wtf import Form, FlaskForm
 
 
-class ModelForm(Form):
+class ModelForm(FlaskForm):
     """
     wtforms_components exposes ModelForm but their ModelForm does not inherit
     from flask_wtf's Form, but instead WTForm's Form.
@@ -13,7 +13,7 @@ class ModelForm(Form):
     uses its own default which is to pass in request.form automatically.
     """
     def __init__(self, obj=None, prefix='', **kwargs):
-        Form.__init__(
+        FlaskForm.__init__(
             self, obj=obj, prefix=prefix, **kwargs
         )
         self._obj = obj

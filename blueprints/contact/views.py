@@ -5,6 +5,7 @@ from flask import (
     request,
     url_for,
     render_template)
+from flask_login import current_user
 
 from blueprints.contact.forms import ContactForm
 
@@ -13,7 +14,7 @@ contact = Blueprint('contact', __name__, template_folder='templates')
 
 @contact.route('/contact', methods=['GET', 'POST'])
 def index():
-    form = ContactForm()
+    form = ContactForm(obj=current_user)
 
     if form.validate():
         # This prevents circular imports.

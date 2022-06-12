@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
     # remember = BooleanField('Stay signed in')
 
 
-class BeginPasswordResetForm(Form):
+class BeginPasswordResetForm(FlaskForm):
     identity = StringField('Username or email',
                            [DataRequired(),
                             Length(3, 254),
